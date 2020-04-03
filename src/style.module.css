@@ -1,0 +1,14 @@
+.wrapper {
+    padding: 30px;
+}
+.inputsTd {
+    padding-left: 5px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+.prices {
+    margin-left: 10px;;
+}
+.deleteButton {
+    margin-left: 5px;
+}
