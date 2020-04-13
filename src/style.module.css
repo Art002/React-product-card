@@ -12,3 +12,15 @@
 .deleteButton {
     margin-left: 5px;
 }
+.titlebars {
+    width: 140px;
+}
+li {
+    list-style: none;
+}
+.inputslist{
+    padding-left: 0;
+}
+.addtocartbtn {
+    margin-top: 5px;
+}

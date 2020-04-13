@@ -1,15 +1,14 @@
-import React, { Fragment, createRef } from 'react';
+import React from 'react';
 import Order from './../mobx/orderState';
 import { observer } from "mobx-react";
 import {Form, Button, Modal, Col} from 'react-bootstrap';
-import State from './../mobx/cartState';
-import {NavLink} from "react-router-dom";
-
+import CartProducts from './../mobx/cartProducts';
+import { NavLink } from "react-router-dom";
+import {routesList} from './../routes/routes';
 
 @observer export default class extends React.Component{
 
     render(){
-        console.log(this.props);
         let people = [];
 
         for(let person in Order.persons){
@@ -30,14 +29,14 @@ import {NavLink} from "react-router-dom";
         }
         
         return (
-            <div>
-                <Col sm={3}>
+            <>
+                <Col md={6}>
                 <h2>Order</h2>
                 <hr/>
                 <Form>
                     {people}
                 </Form>
-                <NavLink to="/">
+                <NavLink to={routesList.card}>
                     <Button variant="primary">
                         Отмена
                     </Button>
@@ -54,20 +53,20 @@ import {NavLink} from "react-router-dom";
                         <p>Имя: {Order.persons.name.value}</p>
                         <p>Телефон: {Order.persons.phone.value}</p>
                         <p>Email: {Order.persons.email.value}</p>
-                        <p>Общая Сумма: {State.total}</p>
+                        <p>Общая Сумма: {CartProducts.total}</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => Order.handleClose()}>
                             Отмена
                         </Button>
-                    <NavLink to="/result">
+                    <NavLink to={routesList.Result}>
                         <Button variant="primary" onClick={() => Order.handleClose()} >
                             Оплата
                         </Button>
                     </NavLink>
                     </Modal.Footer>
                 </Modal>
-            </div>
+            </>
             
         );
     }

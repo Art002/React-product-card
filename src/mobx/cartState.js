@@ -1,47 +1,24 @@
 import React from 'react';
 import { observable, action, computed } from 'mobx';
-
+import CartProducts from './cartProducts';
 
 class Cart{
-    @observable products = getProducts()
-
-    @computed get total(){
-        return this.products.reduce((t, pr) => t + pr.price * pr.current, 0);
-    }
+    @observable products = getProducts();
 
     @action price(i){
         return this.products[i].price * this.products[i].current;
     }
 
-    @action change(i, cnt){
-        this.normalize(i, isNaN(cnt) ? this.minmax.min : cnt);
+    @action pushToCart(card){
+        let product = CartProducts.products.find(item => item.id == card.id);
+        let productIndex = CartProducts.products.findIndex(item => item.id == card.id);
+        if(!product){
+            CartProducts.products.push(card);
+        }else {
+            CartProducts.products.splice(productIndex, 1);
+        }
     }
 
-    @action normalize(i, newCnt){
-        let cnt = Math.min(Math.max(newCnt, this.minmax.min), this.products[i].rest);
-        
-        this.products[i].current = cnt;
-    }
-
-    @action add(i){
-        this.products[i].current++;
-        let cnt = this.products[i].current;        
-        this.normalize(i, cnt);
-    }
-    @action minus(i){
-        this.products[i].current--;
-        let cnt = this.products[i].current;  
-        this.normalize(i, cnt);
-    }
-
-    @observable minmax = {
-        min: 1,
-        max: 10
-    }
-
-    @action remove(i){
-        this.products.splice(i, 1);
-    }
 }
 
 export default new Cart();

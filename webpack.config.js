@@ -68,7 +68,6 @@ let conf = {
     devServer: {
         historyApiFallback: true
     }
-    
 };
 
 module.exports = conf;

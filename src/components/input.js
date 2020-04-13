@@ -1,61 +1,57 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import State from './../mobx/cartState';
 import { observer } from "mobx-react";
 import s from './../style.module.css';
 import {NavLink} from "react-router-dom";
 import {Form, Button, FormControl, Col} from 'react-bootstrap';
-import InputGroup from 'react-bootstrap/InputGroup'
+import InputGroup from 'react-bootstrap/InputGroup';
+import {routesList} from './../routes/routes';
+import CartProducts from './../mobx/cartProducts';
 
 @observer export default class extends React.Component{
 
     static propTypes = {
         value: PropTypes.number,
         onChange: PropTypes.func,
-        nativeProps: PropTypes.object
     }
 
 
     render(){
-        let inputs = State.products.map((input, i) => {
+        let inputs = CartProducts.products.map((input, i) => {
             return (
-                <div>
-                <InputGroup key={input.id} className="mb-1">
-                
-                <Button variant="primary" onClick={() => State.minus(i) }>-</Button>
-                <Col sm={3}>
+                <li>
+                <InputGroup key={input.id} className="mb-1">      
+                <InputGroup.Prepend>
+                <InputGroup.Text id="basic-addon1" className={s.titlebars}>{input.title}</InputGroup.Text>
+                </InputGroup.Prepend>
+                <Button variant="primary" onClick={() => CartProducts.minus(i) }>-</Button>
+                <Col md={5}>
                 <FormControl  
                     type="text" 
                     value={input.current}
-                    onChange={(e) => {State.change(i, e.target.value)}}
-                    
+                    onChange={(e) => {CartProducts.change(i, e.target.value)}}     
                 />
                 </Col>
-                <Button variant="primary" onClick={() => State.add(i) }>+</Button>
-                <Button variant="primary" onClick={() => State.remove(i) } className={s.deleteButton}>x</Button>
-                <strong><span className={s.prices}>{State.price(i)}</span></strong>
-                              
+                <Button variant="primary" onClick={() => CartProducts.add(i) }>+</Button>
+                <Button variant="primary" onClick={() => CartProducts.remove(i) } className={s.deleteButton}>x</Button>
+                <strong><span className={s.prices}>{CartProducts.price(i)}</span></strong>                 
                 </InputGroup>
-                
-                </div>
+                </li>
             )
         });
         
         return (
-            <React.Fragment>
-                    <h2>Cart</h2>
-                    <Form>
-                        {inputs}
-                        <strong>{State.total}</strong>
-                    </Form>
-                    <NavLink to="/order">
+            <Col md={{span: 7, offset: 1}}>
+                <Form>
+                    <ul className={s.inputslist}>{inputs}</ul>
+                    <div><strong>Общая сумма: {CartProducts.total}</strong></div>
+                    <NavLink to={routesList.Order}>
                         <Button variant="primary">
                             Оплата
                         </Button>
                     </NavLink>
-                
-            </React.Fragment>
-            
+                </Form>
+            </Col>
         );
     }
 }

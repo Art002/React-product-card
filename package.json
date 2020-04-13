@@ -1,5 +1,5 @@
 {
-  "name": "react-card",
+  "name": "routes",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -41,5 +41,5 @@
     "url": "https://github.com/Art002/React-product-card/issues"
   },
   "homepage": "https://github.com/Art002/React-product-card#readme",
-  "description": ""
+  "description": "named routes"
 }
