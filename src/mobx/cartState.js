@@ -1,8 +1,10 @@
 import React from 'react';
 import { observable, action, computed } from 'mobx';
-import CartProducts from './cartProducts';
 
-class Cart{
+export default class Cart{
+    constructor(store){
+        this.store = store;
+    }
     @observable products = getProducts();
 
     @action price(i){
@@ -10,19 +12,16 @@ class Cart{
     }
 
     @action pushToCart(card){
-        let product = CartProducts.products.find(item => item.id == card.id);
-        let productIndex = CartProducts.products.findIndex(item => item.id == card.id);
+        let product = this.store.cartProducts.products.find(item => item.id == card.id);
+        let productIndex = this.store.cartProducts.products.findIndex(item => item.id == card.id);
         if(!product){
-            CartProducts.products.push(card);
+            this.store.cartProducts.products.push(card);
         }else {
-            CartProducts.products.splice(productIndex, 1);
+            this.store.cartProducts.products.splice(productIndex, 1);
         }
     }
 
 }
-
-export default new Cart();
-
 
 function getProducts(){
     return [

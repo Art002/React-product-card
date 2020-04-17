@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import s from './../style.module.css';
+import React from 'react';
 
 export default class extends React.Component{
     render(){

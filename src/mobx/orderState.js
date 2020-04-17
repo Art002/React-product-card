@@ -1,7 +1,10 @@
 import React from 'react';
 import { observable, action, computed } from 'mobx';
 
-class Order{
+export default class Order{
+    constructor(store){
+        this.store = store;
+    }
     
     @observable persons = getData();
     
@@ -40,8 +43,6 @@ class Order{
     }
     
 }
-
-export default new Order();
 
 function getData(){
     return {

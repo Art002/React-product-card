@@ -1,18 +1,16 @@
 import React from 'react';
-import Order from './../mobx/orderState';
-import { observer } from "mobx-react";
+import { observer, inject } from "mobx-react";
 import {Form, Button, Modal, Col} from 'react-bootstrap';
-import CartProducts from './../mobx/cartProducts';
 import { NavLink } from "react-router-dom";
 import {routesList} from './../routes/routes';
 
-@observer export default class extends React.Component{
-
+@inject('state') @observer export default class extends React.Component{
     render(){
         let people = [];
-
-        for(let person in Order.persons){
-            let field = Order.persons[person];
+        let CartProducts = this.props.state.cartProducts;
+        let orderState = this.props.state.orderState;
+        for(let person in orderState.persons){
+            let field = orderState.persons[person];
             
             people.push(
                 <Form.Group key={field.id} controlId={'order-form-' + person}>       
@@ -20,7 +18,7 @@ import {routesList} from './../routes/routes';
                     <Form.Control 
                         type="text" 
                         value={field.value}
-                        onChange={(e) => Order.onChange(person, e.target.value)}
+                        onChange={(e) => orderState.onChange(person, e.target.value)}
                         pattern={field.pattern}
                     /> 
                     {field.showMsg}    
@@ -41,26 +39,26 @@ import {routesList} from './../routes/routes';
                         Отмена
                     </Button>
                 </NavLink>
-                <Button variant="primary" onClick={() => Order.handleShow() } disabled={!Order.disabledButton} >
+                <Button variant="primary" onClick={() => orderState.handleShow() } disabled={!orderState.disabledButton} >
                     Далее
                 </Button>
                 </Col>
-                <Modal show={Order.show} onHide={() => Order.handleClose()}>
+                <Modal show={orderState.show} onHide={() => orderState.handleClose()}>
                     <Modal.Header closeButton>
                     <Modal.Title>Ваш Заказ</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Имя: {Order.persons.name.value}</p>
-                        <p>Телефон: {Order.persons.phone.value}</p>
-                        <p>Email: {Order.persons.email.value}</p>
+                        <p>Имя: {orderState.persons.name.value}</p>
+                        <p>Телефон: {orderState.persons.phone.value}</p>
+                        <p>Email: {orderState.persons.email.value}</p>
                         <p>Общая Сумма: {CartProducts.total}</p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => Order.handleClose()}>
+                        <Button variant="secondary" onClick={() => orderState.handleClose()}>
                             Отмена
                         </Button>
                     <NavLink to={routesList.Result}>
-                        <Button variant="primary" onClick={() => Order.handleClose()} >
+                        <Button variant="primary" onClick={() => orderState.handleClose()} >
                             Оплата
                         </Button>
                     </NavLink>

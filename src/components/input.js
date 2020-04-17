@@ -1,22 +1,19 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { observer } from "mobx-react";
+import { observer, inject } from "mobx-react";
 import s from './../style.module.css';
 import {NavLink} from "react-router-dom";
-import {Form, Button, FormControl, Col} from 'react-bootstrap';
-import InputGroup from 'react-bootstrap/InputGroup';
+import {Form, Button, FormControl, Col, InputGroup} from 'react-bootstrap';
 import {routesList} from './../routes/routes';
-import CartProducts from './../mobx/cartProducts';
 
-@observer export default class extends React.Component{
-
+@inject('state') @observer export default class extends React.Component{
     static propTypes = {
         value: PropTypes.number,
         onChange: PropTypes.func,
     }
 
-
     render(){
+        let CartProducts = this.props.state.cartProducts;
         let inputs = CartProducts.products.map((input, i) => {
             return (
                 <li>

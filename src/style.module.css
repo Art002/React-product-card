@@ -24,3 +24,14 @@ li {
 .addtocartbtn {
     margin-top: 5px;
 }
+.inCartButton {
+    margin-left: 10px;
+}
+
+.selected {
+    font-Weight: bold;
+    color: #0056b3;
+}
+.addCartOne {
+    margin-left: 10px;
+}

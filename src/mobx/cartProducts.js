@@ -1,7 +1,10 @@
 import React from 'react';
 import { observable, action, computed } from 'mobx';
 
-class ProductsInCart {
+export default class ProductsInCart {
+    constructor(store){
+        this.store = store;
+    }
     @observable products = []
 
     @action price(i){
@@ -34,4 +37,3 @@ class ProductsInCart {
 
 }
 
-export default new ProductsInCart();
